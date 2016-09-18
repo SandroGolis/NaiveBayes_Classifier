@@ -8,13 +8,6 @@ class Document(object):
         self.label = label
         self.source = source
 
-    # def __str__(self):
-    #     return self.__repr__()
-
-    # def __repr__(self):
-    #     return (u"<%s: %s>" % (self.label, self.abbrev()) if self.label else
-    #             u"%s" % self.abbrev())
-
     def abbrev(self):
         return (self.data if len(self.data) < self.max_display_data else
                 self.data[0:self.max_display_data] + "...")
@@ -29,10 +22,12 @@ class EvenOdd(Document):
         """Is the data even or odd?"""
         return [self.data % 2 == 0]
 
+
 class BagOfWords(Document):
     def features(self):
         """Trivially tokenized words."""
         return self.data.split()
+
 
 class Name(Document):
     def features(self, letters="abcdefghijklmnopqrstuvwxyz"):
