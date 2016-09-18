@@ -15,17 +15,17 @@ def accuracy(classifier, test, verbose=sys.stderr):
     return sum(correct) / len(correct)
 
 
-# names = NamesCorpus(document_class=Name)
-# seed(hash("names"))
-# shuffle(names)
-# train, test = names[:6000], names[6000:]
-# classifier = NaiveBayes()
-# classifier.train(train)
-# print accuracy(classifier, test)
+names = NamesCorpus(document_class=Name)
+seed(hash("names"))
+shuffle(names)
+train, test = names[:6000], names[6000:]
+classifier = NaiveBayes(document_class=Name)
+classifier.train(train)
+accuracy(classifier, test)
 
 
 
-classifier = NaiveBayes()
+classifier = NaiveBayes(document_class = EvenOdd)
 classifier.train([EvenOdd(0, True), EvenOdd(1, False)])
 test = [EvenOdd(i, i % 2 == 0) for i in range(2, 1000)]
-print accuracy(classifier, test)
+accuracy(classifier, test)
