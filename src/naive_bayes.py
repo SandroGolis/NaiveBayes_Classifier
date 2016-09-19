@@ -71,7 +71,9 @@ class NaiveBayes(Classifier):
         if not word_list:
             return np.full(f_vector_length, 0, int)
         f_list = [0]*f_vector_length
-        world_list_set = set(word_list)
+        # todo no counting, only existence (set)
+        # todo make normalize function to use here and in create_vocabulary
+        world_list_set = set(word.lower() for word in word_list if word.isalpha())
         for word in world_list_set:
             if word in self.vocab:
                 idx = self.vocab[word]
@@ -151,11 +153,15 @@ class NaiveBayes(Classifier):
         return self.col_to_label[index]
 
     def make_vocabulary(self, documents):
+        if self.document_class is not BagOfWords:
+            return
         # todo maybe tokenize better with nltk instead of regular split
         all_words = []
         for doc in documents:
             for word in doc.features():
-                all_words.append(word)
-        normalized_set = sorted(set(word.lower() for word in all_words if word.isalpha()))
+                if (word.isalpha()):
+                    all_words.append(word.lower())
+        # todo normalization - sometimes have punctuations inside words. need to avoid
+        normalized_set = sorted(set(all_words))
         values = range(0, len(normalized_set))
         self.vocab = dict(itertools.izip(normalized_set, values))
