@@ -21,7 +21,7 @@ class NaiveBayesTest(TestCase):
 
     def test_even_odd(self):
         """Classify numbers as even or odd"""
-        classifier = NaiveBayes(document_class = EvenOdd)
+        classifier = NaiveBayes()
         classifier.train([EvenOdd(0, True), EvenOdd(1, False)])
         test = [EvenOdd(i, i % 2 == 0) for i in range(2, 1000)]
         self.assertEqual(accuracy(classifier, test), 1.0)
@@ -37,7 +37,7 @@ class NaiveBayesTest(TestCase):
     def test_names_nltk(self):
         """Classify names using NLTK features"""
         train, test = self.split_names_corpus()
-        classifier = NaiveBayes(document_class = Name)
+        classifier = NaiveBayes()
         classifier.train(train)
         self.assertGreater(accuracy(classifier, test), 0.70)
 
@@ -52,7 +52,7 @@ class NaiveBayesTest(TestCase):
     def test_blogs_bag(self):
         """Classify blog authors using bag-of-words"""
         train, test = self.split_blogs_corpus(BagOfWords)
-        classifier = NaiveBayes(document_class = BagOfWords)
+        classifier = NaiveBayes()
         classifier.train(train)
         self.assertGreater(accuracy(classifier, test), 0.55)
 
@@ -63,7 +63,7 @@ class NaiveBayesTest(TestCase):
 
     def test_blogs_imba(self):
         train, test = self.split_blogs_corpus_imba(BagOfWords)
-        classifier = NaiveBayes(document_class = BagOfWords)
+        classifier = NaiveBayes()
         classifier.train(train)
         # you don't need to pass this test
         self.assertGreater(accuracy(classifier, test), 0.1)
